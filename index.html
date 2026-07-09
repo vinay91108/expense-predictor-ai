@@ -103,7 +103,7 @@
           // Call the FastAPI endpoint we created
           // Note: This URL must match your Uvicorn address!
           const response = await fetch(
-            `http://127.0.0.1:8000/predict?amount=${amount}`,
+            `https://expense-predictor-ai.onrender.com/predict?amount=${amount}`,
           );
 
           if (!response.ok) {
