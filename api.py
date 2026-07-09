@@ -8,6 +8,7 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 import os
 from dotenv import load_dotenv
 from fastapi import FastAPI
+from pydantic import BaseModel
 # ... your other imports ...
 
 load_dotenv() # Loads the .env file
@@ -62,3 +63,17 @@ def predict(amount: float):
     db.close()
 
     return {"amount": amount, "predicted_category": category}
+
+
+# 1. Define what the data looks like
+class Expense(BaseModel):
+    amount: float
+    category: str
+
+# 2. Create the save endpoint
+@app.post("/save_expense")
+def save_expense(expense: Expense):
+    new_expense = ExpenseModel(amount=expense.amount, category=expense.category)
+    db.add(new_expense)
+    db.commit()
+    return {"message": "Saved successfully!"}
