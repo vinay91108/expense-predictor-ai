@@ -5,6 +5,15 @@ import pandas as pd
 from datetime import datetime
 from sqlalchemy import create_engine, Column, Integer, Float, String, DateTime
 from sqlalchemy.orm import declarative_base, sessionmaker
+import os
+from dotenv import load_dotenv
+from fastapi import FastAPI
+# ... your other imports ...
+
+load_dotenv() # Loads the .env file
+
+# Replace your hardcoded URL line with this:
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 # --- 1. PASTE YOUR CONNECTION STRING HERE ---
 DATABASE_URL = "postgresql://postgres.ihdadnvdxzyecyvnqloo:RrodPJZtl30dqfzk@aws-0-us-east-1.pooler.supabase.com:6543/postgres"
