@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Predictor AI</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #2e3440;
+        color: white;
+        margin: 0;
+      }
+      .container {
+        border: 1px solid #4c566a;
+        padding: 2rem;
+        border-radius: 8px;
+        text-align: center;
+        background-color: #3b4252;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+      input[type="number"] {
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        width: 80%;
+        background-color: #d8dee9;
+        color: #2e3440;
+      }
+      button {
+        padding: 12px 24px;
+        margin: 10px 0;
+        border-radius: 4px;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #88c0d0;
+        color: #2e3440;
+        font-weight: bold;
+        transition: background 0.2s;
+      }
+      button:hover {
+        background-color: #a3be8c;
+      }
+      #result-container {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 4px;
+        background-color: #434c5e;
+        border: 1px solid #4c566a;
+        display: none;
+      }
+      #result-label {
+        font-size: 0.9rem;
+        color: #81a1c1;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      #result-value {
+        font-weight: bold;
+        font-size: 1.4rem;
+        color: #a3be8c;
+        margin-top: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Predict Category</h1>
+      <p>Enter an expense amount to see what the AI predicts.</p>
+      <input type="number" id="amount" placeholder="e.g., 200" />
+      <br />
+      <button onclick="getPrediction()">Predict Category</button>
+
+      <div id="result-container">
+        <div id="result-label">Prediction Result:</div>
+        <div id="result-value"></div>
+      </div>
+    </div>
+
+    <script>
+      async function getPrediction() {
+        const amount = document.getElementById("amount").value;
+        const resultContainer = document.getElementById("result-container");
+        const resultValue = document.getElementById("result-value");
+
+        // Reset display
+        resultContainer.style.display = "none";
+        resultValue.innerText = "";
+
+        if (!amount || amount <= 0) {
+          alert("Please enter a valid amount.");
+          return;
+        }
+
+        try {
+          // Call the FastAPI endpoint we created
+          // Note: This URL must match your Uvicorn address!
+          const response = await fetch(
+            `http://127.0.0.1:8000/predict?amount=${amount}`,
+          );
+
+          if (!response.ok) {
+            throw new Error("API request failed.");
+          }
+
+          const data = await response.json();
+
+          // Update the UI with the prediction
+          resultValue.innerText = data.predicted_category;
+          resultContainer.style.display = "block";
+        } catch (error) {
+          resultValue.innerText = "Error connecting to API.";
+          resultValue.style.color = "#bf616a"; // Set error color
+          resultContainer.style.display = "block";
+          console.error("Error:", error);
+        }
+      }
+    </script>
+  </body>
+</html>
