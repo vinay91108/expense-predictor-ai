@@ -8,7 +8,6 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 
 # --- 1. PASTE YOUR CONNECTION STRING HERE ---
 DATABASE_URL = "postgresql://postgres.ihdadnvdxzyecyvnqloo:Project1@1234Python@aws-0-us-east-1.pooler.supabase.com:6543/postgres"
-
 # --- 2. DATABASE SETUP ---
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
