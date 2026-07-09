@@ -7,7 +7,7 @@ from sqlalchemy import create_engine, Column, Integer, Float, String, DateTime
 from sqlalchemy.orm import declarative_base, sessionmaker
 
 # --- 1. PASTE YOUR CONNECTION STRING HERE ---
-DATABASE_URL = "postgresql://postgres:E!zrnVt%sMW5p$K@db.ihdadnvdxzyecyvnqloo.supabase.co:5432/postgres"
+DATABASE_URL = "postgresql://postgres.ihdadnvdxzyecyvnqloo:E!zrnVt%sMW5p$K@aws-0-us-east-1.pooler.supabase.com:6543/postgres"
 
 # --- 2. DATABASE SETUP ---
 engine = create_engine(DATABASE_URL)
